@@ -1,0 +1,8 @@
+@using Instagram.Areas.Identity.Data
+@model InstagramUser
+@if (Model != null && !string.IsNullOrWhiteSpace(Model.Photo))
+{
+    <a class="ig-nav__link" asp-action="MyPageProfile" asp-controller="Profiles" aria-label="Profile">
+        <img src="~/Uploads/@Model.Photo" class="LoginPhoto" alt="" width="24" height="24" />
+    </a>
+}

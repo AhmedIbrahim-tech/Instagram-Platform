@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Instagram.Controllers
+namespace Instagram.Controllers;
+
+public class PostsController : Controller
 {
-    public class PostsController : Controller
+    [HttpPost]
+    public IActionResult UploadPost(IFormFile[] file, string desc)
     {
-        [HttpPost]
-        public void uploadPost(IFormFile[] file , string desc)
-        {
-            return View();
-        }
+        return View();
     }
 }

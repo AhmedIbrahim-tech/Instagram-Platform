@@ -1,84 +1,90 @@
 ﻿using Instagram.Areas.Identity.Data;
-using Instagram.Classes;
-using Instagram.Data;
+using Instagram.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Instagram.Controllers
+namespace Instagram.Controllers;
+
+[Authorize]
+public class ProfilesController : Controller
 {
-    public class ProfilesController : Controller
+    private readonly IProfileService _profileService;
+    private readonly UserManager<InstagramUser> _userManager;
+
+    public ProfilesController(IProfileService profileService, UserManager<InstagramUser> userManager)
     {
-        private readonly IWebHostEnvironment host;
-        private readonly UserManager<InstagramUser> manager;
-        private readonly InstagramContext Db;
-        CBase cb;
-        private object hosting;
+        _profileService = profileService;
+        _userManager = userManager;
+    }
 
-        public ProfilesController(IWebHostEnvironment _host, UserManager<InstagramUser> _manager, InstagramContext _Db)
-        {
-            host = _host;
-            manager = _manager;
-            Db = _Db;
-            cb = new CBase(_host, _manager, _Db);
-        }
+    [AllowAnonymous]
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-        public IActionResult Index()
-        {
+    public IActionResult CreateProfile()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateProfile(string name, string bio, IFormFile photo, CancellationToken cancellationToken)
+    {
+        if (photo is not { Length: > 0 })
             return View();
-        }
 
-        [Authorize]
-        public IActionResult CreateProfile()
-        {
-            return View();
-        }
+        var user = await _profileService.GetInstagramUserAsync(User, cancellationToken);
+        if (user == null)
+            return Challenge();
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateProfile(string name, string Bio, IFormFile Photos)
-        {
-            var user = cb.GetInstagramUser(User);
-            user.Name = name;
-            user.Bio = Bio;
-            user.Photo = Photos.FileName;
-            cb.SaveImage(Photos);
-            cb.saveUser(user);
-            return View();
-        }
+        user.Name = name;
+        user.Bio = bio;
+        user.Photo = photo.FileName;
 
+        await _profileService.SaveImageAsync(photo, cancellationToken);
+        await _profileService.SaveUserAsync(user, cancellationToken);
 
-        [Authorize]
-        public IActionResult MyPageProfile()
-        {
-            return View(cb.GetInstagramUser(User));
-        }
+        return View();
+    }
 
-        [HttpPost]
-        public IActionResult EditProfile(string name, string Bio)
-        {
-            var user = cb.GetInstagramUser(User);
-            user.Name = name;
-            user.Bio = Bio;
+    public async Task<IActionResult> MyPageProfile(CancellationToken cancellationToken)
+    {
+        var user = await _profileService.GetInstagramUserAsync(User, cancellationToken);
+        if (user == null)
+            return NotFound();
 
-            cb.saveUser(user);
-            return RedirectToAction("MyPageProfile");
-        }
+        return View(user);
+    }
 
-        [HttpPost]
-        public async Task<bool> ChangePassword(string OldPassword, string NewPassword)
-        {
-            var user = cb.GetInstagramUser(User);
-            var Result = await manager.ChangePasswordAsync(user, OldPassword, NewPassword);
-            return Result.Succeeded;
-        }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditProfile(string name, string bio, CancellationToken cancellationToken)
+    {
+        var user = await _profileService.GetInstagramUserAsync(User, cancellationToken);
+        if (user == null)
+            return NotFound();
 
+        user.Name = name;
+        user.Bio = bio;
+
+        await _profileService.SaveUserAsync(user, cancellationToken);
+        return RedirectToAction(nameof(MyPageProfile));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ChangePassword(string oldPassword, string newPassword)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+            return Unauthorized();
+
+        if (string.IsNullOrWhiteSpace(oldPassword) || string.IsNullOrWhiteSpace(newPassword))
+            return Json(false);
+
+        var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        return Json(result.Succeeded);
     }
 }

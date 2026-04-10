@@ -3,55 +3,47 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> @ViewData["Title"] - Instagram</title>
+    <title>@ViewData["Title"] · Instagram</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/css/Style.css" rel="stylesheet" />
-    <link rel="icon" href="~/img/instagramLogo.png">
+    <link rel="stylesheet" href="~/css/instagram.css" asp-append-version="true" />
+    <link rel="icon" href="~/img/instagramLogo.png" type="image/png" />
     @await RenderSectionAsync("Styles", required: false)
-    <style>
-
-
-
-    </style>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/img/insta.png" /> 
-                </a>
+<body class="ig-body">
+    <header class="ig-header">
+        <div class="ig-header__inner">
+            <a class="ig-logo" asp-area="" asp-controller="Home" asp-action="Index" aria-label="Instagram home">
+                <img src="~/img/insta.png" alt="Instagram" />
+            </a>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <div class="row" style="width:100%">
-                        <div class="col-6">
-                            <div class="searchdiv">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                </svg>
-                                <input placeholder="Search" />
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <partial name="_LoginPartial">
-                        </div>
-                    </div>
-
+            <div class="ig-search">
+                <div class="ig-search__field">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                    <input type="search" placeholder="Search" autocomplete="off" aria-label="Search" />
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.UtcNow.Year - Instagram - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <nav class="ig-nav" aria-label="Main">
+                <partial name="_LoginPartial" />
+            </nav>
         </div>
+    </header>
+
+    <main class="ig-main" role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="ig-footer">
+        <div>
+            <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <a href="#">About</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="mt-2">&copy; @DateTime.UtcNow.Year Instagram from Meta</div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

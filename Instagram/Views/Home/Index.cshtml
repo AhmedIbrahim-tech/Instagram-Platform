@@ -1,8 +1,68 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="ig-feed-layout ig-main--wide mx-auto">
+    <section class="ig-card">
+        <div class="ig-stories">
+            <div class="ig-story">
+                <div class="ig-story__ring">
+                    <div class="ig-story__img d-flex align-items-center justify-content-center text-muted small">You</div>
+                </div>
+                <div class="ig-story__label">Your story</div>
+            </div>
+            <div class="ig-story">
+                <div class="ig-story__ring">
+                    <div class="ig-story__img d-flex align-items-center justify-content-center bg-light text-secondary small">+</div>
+                </div>
+                <div class="ig-story__label">demo_user</div>
+            </div>
+            <div class="ig-story">
+                <div class="ig-story__ring">
+                    <div class="ig-story__img d-flex align-items-center justify-content-center bg-light text-secondary small">+</div>
+                </div>
+                <div class="ig-story__label">creators</div>
+            </div>
+        </div>
+        <div class="ig-post-placeholder" style="min-height: 480px;">
+            <div class="text-center px-4">
+                <p class="mb-2" style="font-size: 22px; font-weight: 300; color: #262626;">No posts yet</p>
+                <p class="mb-0 small text-muted">When people you follow share photos, they’ll appear here.</p>
+            </div>
+        </div>
+    </section>
+
+    <aside class="ig-sidebar d-none d-lg-block">
+        <div class="ig-sidebar__user">
+            <div class="ig-avatar ig-avatar--md bg-secondary"></div>
+            <div class="ig-sidebar__meta">
+                <div class="ig-sidebar__name">your_username</div>
+                <div class="ig-sidebar__sub">Your name</div>
+            </div>
+            <a href="#" class="ig-suggestion__btn">Switch</a>
+        </div>
+        <div class="ig-suggestions__title">
+            <span>Suggested for you</span>
+            <a href="#" class="ig-suggestion__btn m-0">See All</a>
+        </div>
+        <div class="ig-suggestion">
+            <div class="ig-avatar ig-avatar--sm bg-light border"></div>
+            <div class="ig-sidebar__meta">
+                <div class="ig-sidebar__name" style="font-size: 14px;">suggested_one</div>
+                <div class="ig-sidebar__sub">Followed by friend</div>
+            </div>
+            <a href="#" class="ig-suggestion__btn">Follow</a>
+        </div>
+        <div class="ig-suggestion">
+            <div class="ig-avatar ig-avatar--sm bg-light border"></div>
+            <div class="ig-sidebar__meta">
+                <div class="ig-sidebar__name" style="font-size: 14px;">suggested_two</div>
+                <div class="ig-sidebar__sub">New to Instagram</div>
+            </div>
+            <a href="#" class="ig-suggestion__btn">Follow</a>
+        </div>
+        <p class="small text-muted mt-4 mb-0" style="font-size: 11px; line-height: 1.8;">
+            <a href="#" class="text-muted">About</a> · <a href="#" class="text-muted">Help</a> · <a href="#" class="text-muted">Press</a> · <a href="#" class="text-muted">API</a>
+        </p>
+    </aside>
 </div>

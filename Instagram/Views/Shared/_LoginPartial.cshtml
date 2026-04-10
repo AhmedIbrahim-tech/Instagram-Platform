@@ -1,53 +1,54 @@
-﻿@using Instagram.Data
-@using Microsoft.AspNetCore.Identity
-@using Instagram.Areas.Identity.Data
-
+﻿@using Instagram.Areas.Identity.Data
 @inject SignInManager<InstagramUser> SignInManager
 @inject UserManager<InstagramUser> UserManager
-@inject InstagramContext db
-@{
-    Instagram.Classes.CBase cb = new Instagram.Classes.CBase(UserManager, db);
-    var user = cb.GetInstagramUser(User);
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <ul class="ig-nav__list">
+        <li>
+            <a class="ig-nav__link ig-nav__link--active" asp-controller="Home" asp-action="Index" aria-label="Home">
+                <svg aria-hidden="true" fill="#262626" height="24" viewBox="0 0 24 24" width="24">
+                    <path d="M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997A2.997 2.997 0 0 1 15 16.545V22h7V11.543L12 2 2 11.543V22h7v-5.455z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" />
+                </svg>
+            </a>
+        </li>
+        <li>
+            <a class="ig-nav__link" href="#" aria-label="Messages">
+                <svg aria-hidden="true" fill="#262626" height="24" viewBox="0 0 24 24" width="24">
+                    <path d="M12.003 2.001a9.705 9.705 0 1 1 0 19.4 10.194 10.194 0 0 1-5.132-1.36l-4.23 1.054 1.227-3.891a9.97 9.97 0 0 1-1.72-5.607c0-5.405 4.42-9.792 9.815-9.792zm5.536 11.38c.684-.478 1.016-1.146 1.016-2.004 0-1.142-.846-1.904-2.03-2.07-1.485-.2-3.056-.233-4.597-.1-.897.063-1.683-.434-1.867-1.305-.184-.87.27-1.587 1.073-1.823 2.256-.63 4.165-.436 5.88.398 1.698.825 2.576 2.24 2.576 4.476 0 1.452-.368 2.706-1.078 3.72-.684.978-1.626 1.716-2.788 2.156-.684.24-1.44.36-2.244.36h-.188c-.184 0-.367-.024-.55-.06z" fill-rule="evenodd" />
+                </svg>
+            </a>
+        </li>
+        <li>
+            <a class="ig-nav__link" href="#" aria-label="New post">
+                <svg aria-hidden="true" fill="#262626" height="24" viewBox="0 0 24 24" width="24">
+                    <path d="M2 12v3.45c0 1.49.97 2.73 2.3 3.26 1.38.56 2.96-.24 3.42-1.23.33-.66.15-1.49-.45-1.96a3.17 3.17 0 0 1-.14-4.93 3.22 3.22 0 0 1 4.44 0 3.17 3.17 0 0 1-.14 4.93c-.6.47-.78 1.3-.45 1.96.46.99 2.04 1.79 3.42 1.23 1.33-.53 2.3-1.77 2.3-3.26V12c0-4.42-4.03-8-9-8s-9 3.58-9 8zm15.32-2.4c.35-.34.35-.9 0-1.24a.88.88 0 0 0-1.24 0l-2.85 2.86-1.29-1.29a.88.88 0 0 0-1.24 0c-.35.35-.35.92 0 1.24l1.93 1.93c.35.35.9.35 1.24 0l3.47-3.5z" fill-rule="evenodd" />
+                </svg>
+            </a>
+        </li>
+        <li>
+            <a class="ig-nav__link" href="#" aria-label="Explore">
+                <svg aria-hidden="true" fill="#262626" height="24" viewBox="0 0 24 24" width="24">
+                    <path d="M10.201 3.797 12 1.997l1.799 1.8a1.905 1.905 0 0 0 2.7 0l1.8-1.8 1.8 1.8a1.905 1.905 0 0 0 2.7 0L22 1.997l1.799 1.8a1.905 1.905 0 0 0 2.7 0l1.8-1.8-.001 3.398a4.95 4.95 0 0 0-1.433 3.548c0 1.922.87 3.637 2.227 4.805L24.997 24H11.998l-2.576-2.576A4.95 4.95 0 0 0 7 19.947c0-1.92.87-3.637 2.227-4.805L1.003 7.497l1.8-1.8a1.905 1.905 0 0 0 0-2.7l-1.8-1.8 1.8-1.8a1.905 1.905 0 0 0 0-2.7L10.201 3.797zm-6.56 16.232a2.947 2.947 0 0 1-1.433-2.529 2.947 2.947 0 0 1 1.433-2.528c.604-.415 1.245-.75 1.903-.977a11.043 11.043 0 0 0 8.457 8.457c-.227.658-.562 1.299-.977 1.903a2.947 2.947 0 0 1-2.529 1.433 2.947 2.947 0 0 1-2.528-1.433 2.947 2.947 0 0 1-1.433-2.528 2.947 2.947 0 0 1 1.433-2.528c.604-.415 1.245-.75 1.903-.977a11.043 11.043 0 0 0 8.457-8.457c.227-.658.562-1.299.977-1.903a2.947 2.947 0 0 1 2.529-1.433 2.947 2.947 0 0 1 2.528 1.433 2.947 2.947 0 0 1 1.433 2.528 2.947 2.947 0 0 1-1.433 2.528c-.604.415-1.245.75-1.903.977a11.043 11.043 0 0 0-8.457 8.457c-.227.658-.562 1.299-.977 1.903a2.947 2.947 0 0 1-2.529 1.433 2.947 2.947 0 0 1-2.528-1.433z" fill-rule="evenodd" />
+                </svg>
+            </a>
+        </li>
+        <li>
+            <a class="ig-nav__link" href="#" aria-label="Notifications">
+                <svg aria-hidden="true" fill="#262626" height="24" viewBox="0 0 24 24" width="24">
+                    <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2 5.742-6 8.58-4-2.838-6-5.508-6-8.58a4.99 4.99 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.948c.84-1.175 2.207-1.948 3.675-1.948zM12 20.703l-.348.211C8.252 22.234 6 21.512 6 20.108V17c0-1.22 1.354-2.095 2.48-2.58.364-.163.554-.377.654-.579.24-.456.266-1.084.066-1.844-.237-.905-.857-1.792-1.18-2.617-.266-.725-.314-1.447-.314-2.154 0-3.036 1.407-5.406 3.856-6.632l.521-.287C11.5 2.5 12 2.5 12.5 2.5c.5 0 1 .01 1.507.204l.521.287c2.449 1.226 3.856 3.596 3.856 6.632 0 .707-.048 1.429-.314 2.154-.323.825-.943 1.712-1.18 2.617-.2.76-.174 1.388.066 1.844.1.202.29.416.654.579 1.126.485 2.48 1.36 2.48 2.58v3.108c0 1.404-2.252 2.126-5.444.804L12 20.703z" fill-rule="evenodd" />
+                </svg>
+            </a>
+        </li>
+        <li>
+            @await Component.InvokeAsync("LoginUserAvatar")
+        </li>
+    </ul>
 }
-<ul class="navbar-nav vavbar">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a href="">
-                <svg aria-label="Home" class="_8-yf5 " fill="#262626" height="22" viewBox="0 0 48 48" width="1.8 em"><path d="M45.5 48H30.1c-.8 0-1.5-.7-1.5-1.5V34.2c0-2.6-2.1-4.6-4.6-4.6s-4.6 2.1-4.6 4.6v12.3c0 .8-.7 1.5-1.5 1.5H2.5c-.8 0-1.5-.7-1.5-1.5V23c0-.4.2-.8.4-1.1L22.9.4c.6-.6 1.6-.6 2.1 0l21.5 21.5c.3.3.4.7.4 1.1v23.5c.1.8-.6 1.5-1.4 1.5z"></path></svg>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a href="">
-                <svg aria-label="Messenger" class="_8-yf5 " fill="#262626" height="22" viewBox="0 0 48 48" width="1.8em"><path d="M36.2 16.7L29 22.2c-.5.4-1.2.4-1.7 0l-5.4-4c-1.6-1.2-3.9-.8-5 .9l-6.8 10.7c-.7 1 .6 2.2 1.6 1.5l7.3-5.5c.5-.4 1.2-.4 1.7 0l5.4 4c1.6 1.2 3.9.8 5-.9l6.8-10.7c.6-1.1-.7-2.2-1.7-1.5zM24 1C11 1 1 10.5 1 23.3 1 30 3.7 35.8 8.2 39.8c.4.3.6.8.6 1.3l.2 4.1c0 1 .9 1.8 1.8 1.8.2 0 .5 0 .7-.2l4.6-2c.2-.1.5-.2.7-.2.2 0 .3 0 .5.1 2.1.6 4.3.9 6.7.9 13 0 23-9.5 23-22.3S37 1 24 1zm0 41.6c-2 0-4-.3-5.9-.8-.4-.1-.8-.2-1.3-.2-.7 0-1.3.1-2 .4l-3 1.3V41c0-1.3-.6-2.5-1.6-3.4C6.2 34 4 28.9 4 23.3 4 12.3 12.6 4 24 4s20 8.3 20 19.3-8.6 19.3-20 19.3z"></path></svg>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="">
-                <svg aria-label="Find People" class="_8-yf5 " fill="#262626" height="22" viewBox="0 0 48 48" width="1.8em"><path clip-rule="evenodd" d="M24 0C10.8 0 0 10.8 0 24s10.8 24 24 24 24-10.8 24-24S37.2 0 24 0zm0 45C12.4 45 3 35.6 3 24S12.4 3 24 3s21 9.4 21 21-9.4 21-21 21zm10.2-33.2l-14.8 7c-.3.1-.6.4-.7.7l-7 14.8c-.3.6-.2 1.3.3 1.7.3.3.7.4 1.1.4.2 0 .4 0 .6-.1l14.8-7c.3-.1.6-.4.7-.7l7-14.8c.3-.6.2-1.3-.3-1.7-.4-.5-1.1-.6-1.7-.3zm-7.4 15l-5.5-5.5 10.5-5-5 10.5z" fill-rule="evenodd"></path></svg>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a href="">
-                <svg aria-label="Activity Feed" class="_8-yf5 " fill="#262626" height="22" viewBox="0 0 48 48" width="1.8em"><path d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a asp-action="MyPageProfile" asp-controller="Profiles" >
-                <img src="~/Uploads/@user.Photo" class="LoginPhoto" > 
-            </a>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
-    }
-</ul>
+else
+{
+    <div class="ig-nav__auth">
+        <a asp-area="Identity" asp-page="/Account/Login">Log in</a>
+        <a asp-area="Identity" asp-page="/Account/Register">Sign up</a>
+    </div>
+}

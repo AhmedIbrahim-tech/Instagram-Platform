@@ -1,325 +1,271 @@
-﻿@{
-    ViewData["Title"] = @Model.Name;
-}
-@section Styles{
-<style>
-    body {
-        background-color: #FAFAFA;
-    }
-</style>
+﻿@model InstagramUser
+@{
+    ViewData["Title"] = Model?.UserName ?? "Profile";
+    var displayName = Model?.Name ?? Model?.UserName ?? "Profile";
+    var photoSrc = string.IsNullOrWhiteSpace(Model?.Photo)
+        ? "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
+        : Url.Content("~/Uploads/" + Model.Photo.Trim());
 }
 
-@model InstagramUser;
-
-
-
-<section class="header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <img src="~/Uploads/@Model.Photo " class="img-thumbnail img-profiles" />
+<div class="ig-profile ig-main--wide mx-auto">
+    <header class="ig-profile__header">
+        <div class="ig-profile__avatar-wrap">
+            <img src="@photoSrc" alt="" class="ig-profile__avatar" width="150" height="150" />
+        </div>
+        <div class="ig-profile__info">
+            <div class="ig-profile__row">
+                <h1 class="ig-profile__username">@Model.UserName</h1>
+                <button type="button" class="ig-btn ig-btn--outline" data-toggle="modal" data-target="#EditProfilo">Edit profile</button>
+                <button type="button" class="ig-btn ig-btn--icon" data-toggle="modal" data-target="#EditProfilo" aria-label="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319z" />
+                    </svg>
+                </button>
             </div>
 
-            <div class="col-lg-8 col-md-6 col-sm-12">
-                <div class="form-group ProfileName">
-                    <span> <h3> @Model.Name </h3> </span>
-                    <button class="btn btn-outline-primary btned" type="button" data-toggle="modal" data-target="#EditProfilo">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-wide" viewBox="0 0 16 16">
-                            <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="form-group ProfileBio">
-                    <p>@Model.Bio</p>
-                </div>
-
-                <div class="form-group Follwing">
-
-                    <span class="-nal3 ">
-                        <span class="g47SY ">0</span> posts
-                    </span>
-
-                    <a class="-nal3 " href="#" tabindex="0">
-                        <span class="g47SY " title="19">19</span> followers
-                    </a>
-
-                    <a class="-nal3 " href="#" tabindex="0">
-                        <span class="g47SY ">542</span> following
-                    </a>
-                </div>
+            <div class="ig-profile__stats">
+                <span class="ig-profile__stat"><strong>0</strong> posts</span>
+                <a href="#" class="ig-profile__stat"><strong>0</strong> followers</a>
+                <a href="#" class="ig-profile__stat"><strong>0</strong> following</a>
             </div>
 
-
-            <div id="TabPosts" class="col-lg-12">
-                <hr />
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-post" role="tab" aria-controls="pills-home" aria-selected="true">Posts</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-2 role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-con" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-post" role="tabpanel" aria-labelledby="pills-post-tab">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                            </svg>
-                            New Post
-                        </button>
-
-                    </div>
-                    <div class="tab-pane fade" id="pills-2" role="tabpanel" aria-labelledby="pills-2-tab">...</div>
-                    <div class="tab-pane fade" id="pills-con" role="tabpanel" aria-labelledby="pills-con-tab">...</div>
-                </div>
-
+            <div>
+                <p class="ig-profile__bio-name">@displayName</p>
+                <p class="ig-profile__bio-text">@Model.Bio</p>
             </div>
         </div>
+    </header>
+
+    <ul class="nav ig-tabs border-0 justify-content-center" id="profile-main-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link ig-tabs__btn ig-tabs__btn--active active" id="tab-posts-link" data-toggle="tab" href="#tab-pane-posts" role="tab" aria-controls="tab-pane-posts" aria-selected="true">
+                <svg aria-hidden="true" fill="currentColor" height="12" viewBox="0 0 24 24" width="12"><path d="M3 3v8h8V3H3zm10 0v8h8V3h-8zM3 13v8h8v-8H3zm10 0v8h8v-8h-8z" /></svg>
+                POSTS
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link ig-tabs__btn" id="tab-reels-link" data-toggle="tab" href="#tab-pane-reels" role="tab">
+                <svg aria-hidden="true" fill="currentColor" height="12" viewBox="0 0 24 24" width="12"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" /></svg>
+                REELS
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link ig-tabs__btn" id="tab-tagged-link" data-toggle="tab" href="#tab-pane-tagged" role="tab">
+                <svg aria-hidden="true" fill="currentColor" height="12" viewBox="0 0 24 24" width="12"><path d="M10.201 3.797 12 1.997l1.799 1.8a1.905 1.905 0 0 0 2.7 0l1.8-1.8 1.8 1.8a1.905 1.905 0 0 0 2.7 0L22 1.997l1.799 1.8a1.905 1.905 0 0 0 2.7 0l1.8-1.8-.001 3.398a4.95 4.95 0 0 0-1.433 3.548c0 1.922.87 3.637 2.227 4.805L24.997 24H11.998l-2.576-2.576A4.95 4.95 0 0 0 7 19.947c0-1.92.87-3.637 2.227-4.805L1.003 7.497l1.8-1.8a1.905 1.905 0 0 0 0-2.7l-1.8-1.8 1.8-1.8a1.905 1.905 0 0 0 0-2.7L10.201 3.797z" /></svg>
+                TAGGED
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content pt-3">
+        <div class="tab-pane fade show active" id="tab-pane-posts" role="tabpanel" aria-labelledby="tab-posts-link">
+            <div class="ig-grid">
+                <button type="button" class="ig-grid__cell ig-grid__cell--cta border-0 w-100 p-0 bg-transparent" data-toggle="modal" data-target="#staticBackdrop">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                    <span>New</span>
+                </button>
+                @for (var i = 0; i < 8; i++)
+                {
+                    <div class="ig-grid__cell"></div>
+                }
+            </div>
+            <p class="ig-empty-hint d-none">No Posts Yet</p>
+        </div>
+        <div class="tab-pane fade" id="tab-pane-reels" role="tabpanel">
+            <p class="text-center text-muted py-5">No reels yet.</p>
+        </div>
+        <div class="tab-pane fade" id="tab-pane-tagged" role="tabpanel">
+            <p class="text-center text-muted py-5">No tagged posts yet.</p>
+        </div>
     </div>
-</section>
+</div>
 
-<hr />
-
-
-
-<!-- Modal change Password -->
-<div class="modal fade" id="EditProfilo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Edit profile modal -->
+<div class="modal fade" id="EditProfilo" tabindex="-1" role="dialog" aria-labelledby="editProfileTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title w-100 text-center" id="editProfileTitle">Edit profile</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">General Info</a>
+            <div class="modal-body pt-2">
+                <ul class="nav nav-pills nav-justify mb-3" role="tablist">
+                    <li class="nav-item flex-fill text-center">
+                        <a class="nav-link active" id="edit-tab-info" data-toggle="pill" href="#edit-pane-info" role="tab">Profile</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Password</a>
+                    <li class="nav-item flex-fill text-center">
+                        <a class="nav-link" id="edit-tab-pass" data-toggle="pill" href="#edit-pane-pass" role="tab">Password</a>
                     </li>
-
                 </ul>
-                <div class="tab-content" id="pills-tabContent">
-                    @*Tab_1*@
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="edit-pane-info" role="tabpanel" aria-labelledby="edit-tab-info">
                         <form method="post" asp-controller="Profiles" asp-action="EditProfile">
-                            <div class="modal-body">
-
-                                <div class="form-group">
-                                    <label> Name : </label>
-                                    <input class="form-control" name="Name" id="Name" value="@Model.Name" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label> Bio : </label>
-                                    <textarea name="Bio" id="Bio" class="form-control">@Model.Bio</textarea>
-
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label for="Name">Name</label>
+                                <input class="form-control ig-input" name="Name" id="Name" value="@Model.Name" autocomplete="name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Bio">Bio</label>
+                                <textarea name="Bio" id="Bio" class="form-control ig-input" rows="3">@Model.Bio</textarea>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-light border mr-2" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" style="background-color: #0095f6; border-color: #0095f6;">Save</button>
                             </div>
                         </form>
                     </div>
-
-                    @*Tab_2*@
-                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="tab-pane fade" id="edit-pane-pass" role="tabpanel" aria-labelledby="edit-tab-pass">
                         <div class="form-group">
-                            <label> Current Password : </label>
-                            <input class="form-control" type="password" autocomplete="new-password" id="OldPass" oninput="removeerror(OldPass , TextOldPass)" />
-                            <p class="text-danger" style="font-size:9px; display:none" id="TextOldPass">
-                                Current Password Is Required
-                            </p>
+                            <label for="OldPass">Current password</label>
+                            <input class="form-control ig-input" type="password" autocomplete="current-password" id="OldPass" oninput="removeerror(OldPass, TextOldPass)" />
+                            <p class="text-danger small" style="display:none" id="TextOldPass">Current password is required</p>
                         </div>
                         <div class="form-group">
-                            <label> New Password : </label>
-                            <input class="form-control" type="password" autocomplete="off" id="NewPass" oninput="removeerror(NewPass , TextNewPass)" />
-                            <p class="text-danger" style="font-size:9px; display:none" id="TextNewPass">
-                                New Password Must br Bigger than 6 Character
-                            </p>
+                            <label for="NewPass">New password</label>
+                            <input class="form-control ig-input" type="password" autocomplete="new-password" id="NewPass" oninput="removeerror(NewPass, TextNewPass)" />
+                            <p class="text-danger small" style="display:none" id="TextNewPass">At least 6 characters</p>
                         </div>
                         <div class="form-group">
-                            <label> Confirm Password : </label>
-                            <input class="form-control" type="password" autocomplete="off" id="ConfirmPass" oninput="removeerror(ConfirmPass , TextConfirmPass)" />
-                            <p class="text-danger" style="font-size:9px; display:none" id="TextConfirmPass">
-                                New Password Not Equal the Confirm Password .
-                            </p>
+                            <label for="ConfirmPass">Confirm new password</label>
+                            <input class="form-control ig-input" type="password" autocomplete="new-password" id="ConfirmPass" oninput="removeerror(ConfirmPass, TextConfirmPass)" />
+                            <p class="text-danger small" style="display:none" id="TextConfirmPass">Passwords do not match</p>
                         </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button id="ChangePassword" class="btn btn-primary">Save changes</button>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" id="ChangePassword" class="btn btn-primary" style="background-color: #0095f6; border-color: #0095f6;">Update password</button>
                         </div>
                     </div>
                 </div>
-
-
-
-
             </div>
-
         </div>
     </div>
 </div>
 
-<!-- Modal Create Post -->
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Create post modal -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="createPostTitle" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Create New Post</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header align-items-center">
+                <h5 class="modal-title w-100 text-center mb-0" id="createPostTitle">Create new post</h5>
+                <button type="button" class="close position-absolute" style="right: 1rem;" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <table>
-                    <tr>
-                        <td rowspan="2"><img src="~/Uploads/@Model.Photo " class="img-thumbnail img-profiles" style="width:36px; height:36px; border-radios:50%" /></td>
-                        <td>@Model.Name</td>
-                    </tr>
-
-                </table>
-                <textarea class="TextareaCreatePost" placeholder="What Are You Thinking .... " rows="6" id="desc"></textarea>
-
-                <button class="btn btn-secondary" id="ChooseImagePostbtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
-                        <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
-                        <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                <div class="d-flex align-items-center mb-3">
+                    <img src="@photoSrc" class="rounded-circle mr-2" width="36" height="36" alt="" style="object-fit: cover;" />
+                    <span class="font-weight-bold">@Model.UserName</span>
+                </div>
+                <textarea class="TextareaCreatePost ig-input border-0 p-0" placeholder="Write a caption..." rows="4" id="desc"></textarea>
+                <button type="button" class="btn btn-light border mt-2" id="ChooseImagePostbtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="mr-1" aria-hidden="true">
+                        <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a3 3 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
                     </svg>
+                    Add photos
                 </button>
-                <p class="text-danger" style="display:none; font-size:9px; margin-top:10px" id="ExError">
-                    You Must Select Files with *.png or * .jpg or *.jpeg
-                </p>
-                <input style="display:none" type="file" id="ChooseImagePost" />
+                <p class="text-danger small mt-2" style="display:none" id="ExError">Use .png, .jpg, or .jpeg</p>
+                <input type="file" id="ChooseImagePost" accept="image/png,image/jpeg,image/jpg" style="display:none" />
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                    </svg>
-                    Close
-                </button>
-                <button type="button" id="upload" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
-                        <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
-                    </svg>
-                    Share
-                </button>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" id="upload" class="btn btn-primary" style="background-color: #0095f6; border-color: #0095f6;">Share</button>
             </div>
         </div>
     </div>
 </div>
 
-
-@section Scripts{
-<script>
-
-
-       function removeerror(input , p){
-           input.classList.remove("inputError");
-           p.style.display = "none";
-       };
-
-       $("#ChooseImagePostbtn").on("click", function () {
-           document.getElementById("ChooseImagePost").click();
-       })
-
-       $("#ChooseImagePost").on("change" , function () {
-           var u = $("#ChooseImagePost").get(0);
-
-           for(var i = 0; i < u.files.Length; i++){
-               if(u.files[i].name.indexOf('.jpg') <= 0 && u.files[i].name.indexOf('.jpeg') <= 0 && u.files[i].name.indexOf('.png') <= 0 )
-               document.getElementById("ExError").style.display = "block";
-               document.getElementById("upload").classList.add("disabled");
-               break;
-           }else{
-               document.getElementById("ExError").style.display = "none";
-               document.getElementById("upload").classList.remove("disabled");
-
-           }
-       });
-
-       $("#upload").on("click", function () {
-          if(!document.getElementById("upload").classList.contains('disabled')){
-              var df = new FormData();
-
-              df.append("desc" , document.getElementById("desc").value);
-              var u = $("#ChooseImagePost").get(0);       
-              for(var i = 0; i < u.files.Length; i++){
-                  df.append("ChooseImagePost" , u.files[i]);
-              }
-
-              $.ajax({
-                  url :'/Posts/uploadPost',
-                  type :'post',
-                  processData : false,
-                  contentType : false,
-                  data : df,
-                  success : function () {
-                      $("#EditProfilo").modal('hide');
-                  }
-              })
-          }
-       })
-
-</script>
-<script>
-    $("#ChangePassword").on("click", function () {
-        var Oldpassword = document.getElementById("OldPass");
-        var Newpassword = document.getElementById("NewPass");
-        var Confirmpassword = document.getElementById("ConfirmPass");
-
-        if (Oldpassword.value.replace(' ', '') == '') {
-            Oldpassword.classList.add("inputError");
-            document.getElementById("TextOldPass").style.display = "block";
-            return false;
+@section Scripts {
+    <script>
+        function removeerror(input, p) {
+            input.classList.remove("inputError");
+            p.style.display = "none";
         }
 
-        if (Newpassword.value.Length < 6 ) {
-            Newpassword.classList.add("inputError");
-            document.getElementById("TextNewPass").style.display = "block";
-            return false;
-        }
-
-        if (Confirmpassword.value != Newpassword.value) {
-            Newpassword.classList.add("inputError");
-            Confirmpassword.classList.add("inputError");
-            document.getElementById("TextConfirmPass").style.display = "block";
-            return false;
-        }
-
-        $.ajax({
-            url : '/Profiles/ChangePassword',
-            type : 'post',
-            data :{ Oldpassword : Oldpassword.value , Newpassword : Newpassword.value},
-            success : function (Result){
-                if(Boolean(Result) == true)
-                alert ("Change Password Success");
-                $("#EditProfilo").modal('hide');
-            } else {
-                Oldpassword.classList.add("inputError");
-            }
-        }
+        $("#ChooseImagePostbtn").on("click", function () {
+            document.getElementById("ChooseImagePost").click();
         });
-    });
 
-    $("#ChooseImagePostbtn").on("click", function () {
-        document.getElementById("ChooseImagePost").click();
-    })
+        $("#ChooseImagePost").on("change", function () {
+            var input = this;
+            if (!input.files || input.files.length === 0) return;
+            var ok = true;
+            for (var i = 0; i < input.files.length; i++) {
+                var n = input.files[i].name.toLowerCase();
+                if (n.indexOf(".jpg") <= 0 && n.indexOf(".jpeg") <= 0 && n.indexOf(".png") <= 0) {
+                    ok = false;
+                    break;
+                }
+            }
+            if (!ok) {
+                document.getElementById("ExError").style.display = "block";
+                document.getElementById("upload").classList.add("disabled");
+            } else {
+                document.getElementById("ExError").style.display = "none";
+                document.getElementById("upload").classList.remove("disabled");
+            }
+        });
 
-</script>
+        $("#upload").on("click", function () {
+            if (document.getElementById("upload").classList.contains("disabled")) return;
+            var df = new FormData();
+            df.append("desc", document.getElementById("desc").value);
+            var u = document.getElementById("ChooseImagePost");
+            if (u.files) {
+                for (var i = 0; i < u.files.length; i++) {
+                    df.append("ChooseImagePost", u.files[i]);
+                }
+            }
+            $.ajax({
+                url: "/Posts/UploadPost",
+                type: "post",
+                processData: false,
+                contentType: false,
+                data: df,
+                success: function () {
+                    $("#staticBackdrop").modal("hide");
+                }
+            });
+        });
+
+        $("#ChangePassword").on("click", function () {
+            var oldP = document.getElementById("OldPass");
+            var newP = document.getElementById("NewPass");
+            var conf = document.getElementById("ConfirmPass");
+
+            if (!oldP.value.replace(/\s/g, "")) {
+                oldP.classList.add("inputError");
+                document.getElementById("TextOldPass").style.display = "block";
+                return false;
+            }
+            if (newP.value.length < 6) {
+                newP.classList.add("inputError");
+                document.getElementById("TextNewPass").style.display = "block";
+                return false;
+            }
+            if (conf.value !== newP.value) {
+                conf.classList.add("inputError");
+                document.getElementById("TextConfirmPass").style.display = "block";
+                return false;
+            }
+
+            $.ajax({
+                url: "/Profiles/ChangePassword",
+                type: "post",
+                data: { oldPassword: oldP.value, newPassword: newP.value },
+                success: function (result) {
+                    if (result === true) {
+                        alert("Password updated");
+                        $("#EditProfilo").modal("hide");
+                    } else {
+                        oldP.classList.add("inputError");
+                    }
+                }
+            });
+        });
+    </script>
 }

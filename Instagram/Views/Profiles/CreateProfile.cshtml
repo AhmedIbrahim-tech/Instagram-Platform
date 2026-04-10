@@ -1,81 +1,64 @@
-﻿<div class="container">
-    <div class="row">
+﻿@{
+    ViewData["Title"] = "Edit profile";
+}
 
-        <div class="col-lg-12">
+<div class="ig-form-card">
+    <h1>Add profile info</h1>
+    <p class="text-center text-muted small mb-4">Add a name, bio, and profile photo so friends know it’s you.</p>
 
+    <form method="post" enctype="multipart/form-data" asp-controller="Profiles" asp-action="CreateProfile">
+        <div class="ig-field">
+            <label for="Name">Name</label>
+            <input class="ig-input" name="Name" id="Name" autocomplete="name" required />
         </div>
 
-
-        <div class="col-lg-6 align-content-center">
-            <form method="post" asp-controller="Profiles" asp-action="CreateProfile">
-                <div class="form-group">
-                    <label> Name : </label>
-                    <input class="form-control" name="Name" id="Name" />
-                </div>
-
-                <div class="form-group">
-                    <label> Bio : </label>
-                    <textarea name="Bio" id="Bio" class="form-control"></textarea>
-                </div>
-
-                @* Image Form *@
-
-                <div class="form-group">
-                    <img class="img-Profile" id="dd"  src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" />
-
-                    <button type="button" class="btn btn-outline-primary" id="ci">
-                        Choose Image
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
-                            <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                            <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
-                        </svg>
-                    </button>
-
-                    <input type="file" id="f" style="display:none;" name="Photo" />
-                    <input type="submit" value="save" class="btn btn-success btn_save_profile" id="Sender" />
-                </div>
-            </form>
+        <div class="ig-field">
+            <label for="Bio">Bio</label>
+            <textarea name="Bio" id="Bio" class="ig-input" rows="3" placeholder="Tell people about you"></textarea>
         </div>
-        <div class="col-lg-12">
 
+        <div class="ig-field text-center">
+            <img class="img-Profile border" id="dd" src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" alt="" />
+            <div class="mt-3">
+                <button type="button" class="ig-btn ig-btn--outline" id="ci">Choose profile photo</button>
+            </div>
+            <input type="file" id="f" name="Photo" accept="image/png,image/jpeg,image/jpg" style="display:none;" />
         </div>
-    </div>
+
+        <button type="submit" class="ig-btn ig-btn--primary w-100 mt-2" id="Sender">Submit</button>
+    </form>
 </div>
 
-@section Scripts{ 
-<script>
+@section Scripts {
+    <script>
+        $("#ci").on("click", function () {
+            document.getElementById("f").click();
+        });
 
-    $("#ci").on("click", function () {
-        document.getElementById("f").click();
-    });
+        $("#f").on("change", function () {
+            var src = document.getElementById("f");
+            var target = document.getElementById("dd");
+            if (!src.files || !src.files[0]) return;
+            var fr = new FileReader();
+            fr.readAsDataURL(src.files[0]);
+            fr.onload = function () {
+                target.src = this.result;
+            };
+        });
 
-    $("#f").on("change", function () {
-        var src = document.getElementById('f');
-        var target = document.getElementById('dd');
+        $("#Sender").on("click", function () {
+            var n = document.getElementById("Name");
+            if (!n.value.replace(/\s/g, "")) {
+                n.classList.add("inputError");
+                return false;
+            }
+        });
 
-        var fr = new FileReader();
-        fr.readAsDataURL(src.files[0]);
-        fr.onload = function (e) {
-            target.src = this.result;
-        }
-    });
-
-    $("#Sender").on("click", function () {
-        var n = document.getElementById('Name');
-        if (n.value.replace(' ', '') == '') {
-            n.classList.add("inputError");
-            return false;
-        }
-    });
-
-    $("#Name").on("input", function () {
-        var n = document.getElementById('Name');
-        if (n.value.replace(' ', '') != '') {
-            n.classList.remove("inputError");
-            return false;
-        }
-    });
-
-</script>
+        $("#Name").on("input", function () {
+            var n = document.getElementById("Name");
+            if (n.value.replace(/\s/g, "")) {
+                n.classList.remove("inputError");
+            }
+        });
+    </script>
 }

@@ -5,74 +5,40 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-                @*<div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>*@
-            </form>
-        </section>
+<div class="ig-auth-wrap">
+    <div class="ig-form-card" style="max-width: 350px; padding: 32px 40px;">
+        <div class="text-center mb-4">
+            <img src="~/img/insta.png" alt="Instagram" style="height: 51px; width: auto;" />
+        </div>
+
+        <form id="account" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+            <div class="ig-field">
+                <input asp-for="Input.EmailOrUserName" class="ig-input" placeholder="Email or username" autocomplete="username" />
+                <span asp-validation-for="Input.EmailOrUserName" class="text-danger small d-block mt-1"></span>
+            </div>
+            <div class="ig-field">
+                <input asp-for="Input.Password" class="ig-input" placeholder="Password" autocomplete="current-password" />
+                <span asp-validation-for="Input.Password" class="text-danger small d-block mt-1"></span>
+            </div>
+            <div class="ig-field d-flex align-items-center">
+                <label asp-for="Input.RememberMe" class="mb-0 small">
+                    <input asp-for="Input.RememberMe" />
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+            <button type="submit" class="ig-btn ig-btn--primary w-100 mt-2">Log in</button>
+        </form>
+
+        <p class="text-center small mt-4 mb-0">
+            Don't have an account?
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" style="color: var(--ig-link); font-weight: 600;">Sign up</a>
+        </p>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div align="center">
-                        <img src="~/img/instagramLogo.png" style="width:50%" />
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
+
+    <div class="text-center mt-3">
+        <img src="~/img/instagramLogo.png" alt="" style="max-width: 180px; opacity: 0.9;" />
     </div>
 </div>
 

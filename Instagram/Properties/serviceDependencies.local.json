@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql.local",
-      "connectionId": "InstagramContextConnection"
+    "sqlite1": {
+      "type": "sqlite.local",
+      "connectionId": "DefaultConnection"
     }
   }
 }
